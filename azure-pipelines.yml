@@ -60,6 +60,7 @@ steps:
   inputs:
     command: buildAndPush
     repository: $(imageName)
+    containerRegistry: $(dockerHub)
     tags: |
       tag1
       tag2
