@@ -10,21 +10,18 @@ variables:
   tag: 'test'
 
 steps:
-#- task: Docker@2
-#  inputs:
-#    command: login
-#    containerRegistry: $(dockerHub)
 
 - task: Docker@2
   displayName: Build an image
   inputs:
     repository: $(imageName)
     command: build
+    # The 'containerRegistry' input has to be in the build step if we want to have tags for the next push step.
     containerRegistry: |
-      $(dockerHub)
+      $(dockerHub) 
     Dockerfile: ./Dockerfile
     tags: |
-      test1
+      $(tag)
     
 - task: Docker@2
   displayName: Push image
@@ -34,24 +31,11 @@ steps:
     repository: $(imageName)
     command: push
     tags: |
-      test1
-      
-#- task: Docker@2
-#  inputs:
-#    command: build
-#    Dockerfile: '**/Dockerfile'
-#    containerRegistry: $(dockerHub)
-#    repository: $(imageName)
-#    tags: |
-#      $(tag)
+      $(tag)
 
-#- task: Docker@2
-#  inputs: 
-#    command: push
-#    containerRegistry: $(dockerHub)
-#    repository: $(imageName)
-#    tags: |
-#      $(tag)
+- script:
+   docker image ls
+   displayName: 'get the name of the built image'
 
 #- task: Docker@2
 #  displayName: Build and Push
