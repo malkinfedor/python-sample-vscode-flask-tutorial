@@ -34,7 +34,7 @@ steps:
       $(tag)
 
 - script: |
-  docker image ls
+    docker image ls
   displayName: 'get the name of the built image'
 
 #- task: Docker@2
