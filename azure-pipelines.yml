@@ -5,7 +5,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName: 'pipelines-python-docker'
+  imageName: 'malkinfedor/pipelines-python-docker:$(Build.BuildId)'
   dockerHub: 'docker-registry-susin'
   tag: 'test'
 
@@ -13,7 +13,7 @@ steps:
 - task: Docker@2
   displayName: Build an image
   inputs:
-    repository: malkinfedor/$(imageName)
+    repository: $(imageName)
     command: build
     Dockerfile: ./Dockerfile
     #tags: |
@@ -31,9 +31,9 @@ steps:
   inputs:
     containerRegistry: |
       $(dockerHub)
-    repository: malkinfedor/$(imageName)
+    repository: $(imageName)
     command: push
-    tags: |
-      $(Build.BuildId)
+    #tags: |
+    #  $(Build.BuildId)
     #  test1
     #  test2
