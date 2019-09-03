@@ -19,7 +19,7 @@ steps:
   displayName: Push image
   inputs:
     containerRegistry: |
-      $(docker-hub-susin)
+      $(docker-registry-susin)
     repository: $(imageName)
     command: push
     tags: |
