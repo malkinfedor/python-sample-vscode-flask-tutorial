@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  python-azure-pipeline:
+    image: bretfisher/jekyll-serve
+    volumes:
+      - .:/test
+    ports:
+      - '80:4000'
