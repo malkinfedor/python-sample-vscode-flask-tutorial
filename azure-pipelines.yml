@@ -6,6 +6,7 @@ pool:
 
 variables:
   imageName: 'pipelines-python-docker'
+  dockerHub: 'docker-registry-susin'
 
 steps:
 - task: Docker@1
@@ -19,7 +20,7 @@ steps:
   displayName: Push image
   inputs:
     containerRegistry: |
-      $(docker-registry-susin)
+      $(dockerHub)
     repository: $(imageName)
     command: push
     tags: |
