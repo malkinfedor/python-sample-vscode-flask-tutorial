@@ -31,7 +31,6 @@ steps:
     containerRegistry: |
       $(dockerHub)
     repository: $(imageName)
-    repository: malkinfedor/$(imageName)
     command: push
     tags: |
       test1
