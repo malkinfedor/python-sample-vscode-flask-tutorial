@@ -12,7 +12,7 @@ steps:
 - task: Docker@1
   displayName: Build an image
   inputs:
-    repository: $(imageName)
+    repository: malkinfedor/$(imageName)
     command: build
     Dockerfile: ./Dockerfile
     tags: |
@@ -24,7 +24,7 @@ steps:
   inputs:
     containerRegistry: |
       $(dockerHub)
-    repository: $(imageName)
+    repository: malkinfedor/$(imageName)
     command: push
     tags: |
       test1
