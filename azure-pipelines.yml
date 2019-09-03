@@ -34,8 +34,8 @@ steps:
       $(tag)
 
 - script:
-   docker image ls
-   displayName: 'get the name of the built image'
+  docker image ls
+  displayName: 'get the name of the built image'
 
 #- task: Docker@2
 #  displayName: Build and Push
