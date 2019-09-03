@@ -26,6 +26,12 @@ steps:
 #  inputs:
 #    command: login
 #    containerRegistry: $(dockerHub)
+
+- script: |
+    pwd
+    ls -l
+    whoami
+  displayName: 'get info about dir and user'
     
 - task: Docker@2
   displayName: Push image
