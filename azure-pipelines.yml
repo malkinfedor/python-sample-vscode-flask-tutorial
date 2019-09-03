@@ -10,7 +10,6 @@ variables:
   tag: 'test'
 
 steps:
-steps:
 - task: Docker@2
   inputs:
     command: login
