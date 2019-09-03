@@ -31,7 +31,7 @@ steps:
   inputs:
     containerRegistry: |
       $(dockerHub)
-    repository: malkinfedor/$(imageName)
+    repository: malkinfedor/$(imageName):$(Build.BuildId)
     command: push
     #tags: |
     #  $(Build.BuildId)
