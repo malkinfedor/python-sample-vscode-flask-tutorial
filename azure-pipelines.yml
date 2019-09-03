@@ -31,6 +31,7 @@ steps:
     pwd
     ls -l
     whoami
+    docker image ls
   displayName: 'get info about dir and user'
     
 - task: Docker@2
@@ -38,7 +39,7 @@ steps:
   inputs:
     containerRegistry: |
       $(dockerHub)
-    #repository: $(imageName)
+    repository: $(imageName)
     imageName: $(imageName)
     command: push
     #tags: |
