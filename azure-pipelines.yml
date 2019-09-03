@@ -10,57 +10,35 @@ variables:
   tag: 'test'
 
 steps:
+steps:
 - task: Docker@2
-  displayName: Build an image
   inputs:
-    repository: $(imageName)
-    imageName: $(imageName)
-    command: build
-    Dockerfile: ./Dockerfile
-    #tags: |
-    #  test1
-    #  test2
-    
-#- task: Docker@2
-#  displayName: Login to Docker Hub
-#  inputs:
-#    command: login
-#    containerRegistry: $(dockerHub)
-
-- script: |
-    pwd
-    ls -l
-    whoami
-    docker image ls
-  displayName: 'get info about dir and user'
-    
-#- task: Docker@2
-#  displayName: Push image
-#  inputs:
-#    containerRegistry: |
-#      $(dockerHub)
-#    repository: $(imageName)
-#    #imageName: $(imageName)
-#    command: push
-#    #tags: |
-#    #  $(Build.BuildId)
-#    #  test1
-#    #  test2
-    
-- script: |
-    pwd
-    ls -l
-    whoami
-    docker image ls
-  displayName: 'get info about dir and user'
-  
-  
-- task: Docker@2
-  displayName: Build and Push
-  inputs:
-    command: buildAndPush
-    repository: $(imageName)
+    command: login
     containerRegistry: $(dockerHub)
+
+- task: Docker@2
+  inputs:
+    command: build
+    Dockerfile: '**/Dockerfile'
+    containerRegistry: $(dockerHub)
+    repository: $(imageName)
     tags: |
-      tag1
-      tag2
+      $(tag)
+
+- task: Docker@2
+  inputs: 
+    command: push
+    containerRegistry: $(dockerHub)
+    repository: $(imageName)
+    tags: |
+      $(tag)
+
+#- task: Docker@2
+#  displayName: Build and Push
+#  inputs:
+#    command: buildAndPush
+#    repository: $(imageName)
+#    containerRegistry: $(dockerHub)
+#    tags: |
+#      tag1
+#      tag2
