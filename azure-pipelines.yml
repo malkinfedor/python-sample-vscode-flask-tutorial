@@ -33,7 +33,7 @@ steps:
     tags: |
       $(tag)
 
-- script:
+- script: |
   docker image ls
   displayName: 'get the name of the built image'
 
