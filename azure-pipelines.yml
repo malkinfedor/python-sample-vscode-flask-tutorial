@@ -52,7 +52,8 @@ stages:
         sshEndpoint: 'docker-swarm-node-01'
         commands: |
          tag=$(Build.BuildId)
-         docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$tag
+         echo $tag
+         docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$(Build.BuildId)
         failOnStdErr: false
       continueOnError: true
       env:
