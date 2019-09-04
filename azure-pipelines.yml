@@ -26,6 +26,8 @@ stages:
         Dockerfile: ./Dockerfile
         tags: |
           $(Build.BuildId)
+          good
+          
     - task: Docker@2
       displayName: Push image
       inputs:
@@ -35,6 +37,8 @@ stages:
         command: push
         tags: |
           $(Build.BuildId)
+          good
+          
     - script: |
         docker image ls
       displayName: 'get the name of the built image'
@@ -51,9 +55,9 @@ stages:
       inputs:
         sshEndpoint: 'docker-swarm-node-01'
         commands: |
-         echo $tag
-         docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$(Build.BuildId)
+         imagetag=$(Build.BuildId) && echo $imagetag && docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$imagetag
+         #docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$(Build.BuildId)
         failOnStdErr: false
       continueOnError: true
       env:
-        tag: $(Build.BuildId)
+        imagetag: $(Build.BuildId)
