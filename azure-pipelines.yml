@@ -40,7 +40,7 @@ stages:
       displayName: 'get the name of the built image'
       
 - stage: Deploy
-  dependsOn: test
+  dependsOn: Build
   jobs:
   - job: deploy_staging
     pool:
