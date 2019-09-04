@@ -51,10 +51,8 @@ stages:
       inputs:
         sshEndpoint: 'docker-swarm-node-01'
         commands: |
-         echo $test_var_1
          echo $buildid
-         echo $(Build.BuildId)
-         echo $Build.BuildId
+         docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$buildid
         failOnStdErr: false
       continueOnError: true
       env:
