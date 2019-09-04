@@ -1,0 +1,35 @@
+trigger:
+- master
+pool:
+  vmImage: 'Ubuntu-16.04'
+variables:
+  imageName: 'malkinfedor/pipelines-python-docker'
+  dockerHub: 'docker-registry-susin'
+  tag: 'python'
+  
+steps:
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: $(imageName)
+    command: build
+    # The 'containerRegistry' input has to be in the build step if we want to have tags for the next push step.
+    containerRegistry: |
+      $(dockerHub) 
+    Dockerfile: ./Dockerfile
+    tags: |
+      $(tag)
+
+    
+- task: Docker@2
+  displayName: Push image
+  inputs:
+    containerRegistry: |
+      $(dockerHub)
+    repository: $(imageName)
+    command: push
+    tags: |
+      $(tag)
+
+- script: |
+    docker image ls
