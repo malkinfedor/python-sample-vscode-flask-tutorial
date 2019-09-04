@@ -7,7 +7,7 @@ pool:
 variables:
   imageName: 'malkinfedor/pipelines-python-docker'
   dockerHub: 'docker-registry-susin'
-  tag: 'test'
+  tag: 'python'
 
 steps:
 
