@@ -1,48 +1,39 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
-
-variables:
-  imageName: 'malkinfedor/pipelines-python-docker'
-  dockerHub: 'docker-registry-susin'
-  tag: 'python'
-
-steps:
-
-- task: Docker@2
-  displayName: Build an image
-  inputs:
-    repository: $(imageName)
-    command: build
-    # The 'containerRegistry' input has to be in the build step if we want to have tags for the next push step.
-    containerRegistry: |
-      $(dockerHub) 
-    Dockerfile: ./Dockerfile
-    tags: |
-      $(Build.BuildId)
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    continueOnError: true
     
-- task: Docker@2
-  displayName: Push image
-  inputs:
-    containerRegistry: |
-      $(dockerHub)
-    repository: $(imageName)
-    command: push
-    tags: |
-      $(Build.BuildId)
-
-- script: |
-    docker image ls
-  displayName: 'get the name of the built image'
-
-#- task: Docker@2
-#  displayName: Build and Push
-#  inputs:
-#    command: buildAndPush
-#    repository: $(imageName)
-#    containerRegistry: $(dockerHub)
-#    tags: |
-#      tag1
-#      tag2
+    variables:
+      imageName: 'malkinfedor/pipelines-python-docker'
+      dockerHub: 'docker-registry-susin'
+      tag: 'python'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        repository: $(imageName)
+        command: build
+        # The 'containerRegistry' input has to be in the build step if we want to have tags for the next push step.
+        containerRegistry: |
+          $(dockerHub) 
+        Dockerfile: ./Dockerfile
+        tags: |
+          $(Build.BuildId)
+    - task: Docker@2
+      displayName: Push image
+      inputs:
+        containerRegistry: |
+          $(dockerHub)
+        repository: $(imageName)
+        command: push
+        tags: |
+          $(Build.BuildId)
+    - script: |
+        docker image ls
+      displayName: 'get the name of the built image'
