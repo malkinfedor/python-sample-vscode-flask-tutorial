@@ -1,6 +1,11 @@
 trigger:
 - master
 
+variables:
+  imageName: 'malkinfedor/pipelines-python-docker'
+  dockerHub: 'docker-registry-susin'
+  tag: 'python'
+
 stages:
 - stage: Build
   jobs:
@@ -8,11 +13,7 @@ stages:
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
-    
-    variables:
-      imageName: 'malkinfedor/pipelines-python-docker'
-      dockerHub: 'docker-registry-susin'
-      tag: 'python'
+   
     steps:
     - task: Docker@2
       displayName: Build an image
