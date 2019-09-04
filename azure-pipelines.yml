@@ -55,14 +55,10 @@ stages:
       inputs:
         sshEndpoint: 'docker-swarm-node-01'
         commands: |
-         imagetag=$(Build.BuildId) && echo $imagetag && docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$imagetag
-         echo $dockerHubTest
-         echo $(dockerHubTest)
-         echo $dockerHub
-         echo $(dockerHub)
-         #docker service update pipelines-python --image malkinfedor/pipelines-python-docker:$(Build.BuildId)
+        echo 'This image will be deploying - $(Build.DefinitionName):$(Build.BuildId)'
+        docker service update pipelines-python --image $(Build.DefinitionName):$(Build.BuildId)
         failOnStdErr: false
       continueOnError: true
-      env:
-        imagetag: $(Build.BuildId)
-        dockerHubTest: '123'
+      #env:
+      #  imagetag: $(Build.BuildId)
+      #  dockerHubTest: '123'
