@@ -38,3 +38,19 @@ stages:
     - script: |
         docker image ls
       displayName: 'get the name of the built image'
+      
+- stage: Deploy
+  dependsOn: test
+  jobs:
+  - job: deploy_staging
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+    - task: SSH@0
+      displayName: 'Run shell commands on remote machine'
+      inputs:
+        sshEndpoint: 'docker-swarm-node-01'
+        commands: |
+         echo $test_var_1
+        failOnStdErr: false
+      continueOnError: true
