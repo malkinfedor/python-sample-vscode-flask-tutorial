@@ -52,5 +52,10 @@ stages:
         sshEndpoint: 'docker-swarm-node-01'
         commands: |
          echo $test_var_1
+         echo $buildid
+         echo $(Build.BuildId)
+         echo $Build.BuildId
         failOnStdErr: false
       continueOnError: true
+      env:
+        buildid: $(Build.BuildId)
